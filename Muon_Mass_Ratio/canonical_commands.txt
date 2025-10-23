@@ -1,0 +1,16 @@
+CORES=$(seq -s, 0 $(($(nproc)-1))); export RAYON_NUM_THREADS=$(nproc); taskset -c "$CORES" \
+cargo run --release --bin hb_spectrum_flux -- \
+  --nx 512 --ny 512 --r-in 0.99 --r-out 1.00 \
+  --eps-b 0.05 --eps-e 0.910 --flux 3.141592653589793 --tau 0.0 \
+  --csr-op=/home/luke-miller/Desktop/Substrate_Theory/Experiments/leptons/Laplacian2D_512x512_Cf1.npz \
+  --csr-scale=-1.052e-3 \
+  --m 16 --max-it 600 --min-iters 600 --tol 0 \
+  --log-every 1 --checkpoint-every 0 \
+  --out-prefix out/csr_e_0.910_s_m1p052e3_i600_pin
+  
+  
+CORES=$(seq -s, 0 $(($(nproc)-1))); RAYON_NUM_THREADS=$(nproc) taskset -c "$CORES" cargo run --release --bin hb_spectrum_flux -- --nx 512 --ny 512 --r-in 0.99 --r-out 1.00 --eps-b 0.05 --eps-e 0.910 --flux 3.141592653589793 --tau 0.0 --csr-op=/home/luke-miller/Desktop/Substrate_Theory/Experiments/leptons/Laplacian2D_512x512_Cf1.npz --csr-scale=-1.05e-3 --m 16 --max-it 1200 --tol 1e-12 --min-iters 300 --log-every 1 --checkpoint-every 0 --out-prefix "out/csr_e_0.910_s_m1p05e3_i1200_pinned"
+
+
+
+
