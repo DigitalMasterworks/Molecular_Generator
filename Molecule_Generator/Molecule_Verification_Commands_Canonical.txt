@@ -1,0 +1,19 @@
+# Repro commands — ChEMBL 36
+
+## 1) SMILES presence sweep (quiet; print only missing/odd ones)
+python3 molecule_sql_verify.py \
+  --sqlite /path/to/db/chembl_36.db \
+  --max-heavy 100000 \
+  --pi-reserve 2 --alpha-pi 1.15 \
+  --print-smiles \
+  --only-bad \
+  --log chembl36_bad_smiles_ignore_missing.log
+
+## 2) Full verify (bad-only with checkpoints)
+python3 molecule_sql_verify.py \
+  --sqlite /path/to/db/chembl_36.db \
+  --pi-reserve 2 --alpha-pi 1.15 \
+  --max-heavy 100000 \
+  --only-bad \
+  --log chembl36_full_bad.log \
+  --checkpoint-every 100000
